@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Todos\Todos.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="dbup"/>
+        <PackageReference Include="dbup-postgresql" />
+        <PackageReference Include="System.Text.RegularExpressions"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\..\infra\database\migrations\**" CopyToOutputDirectory="Always" LinkBase="migrations"/>
+        <None Include="..\..\infra\database\seeds\**" CopyToOutputDirectory="Always" LinkBase="seeds"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="..\..\infra\database\migrations\">
+        <Link>migrations</Link>
+      </Folder>
+      <Folder Include="..\..\infra\database\seeds\">
+        <Link>seeds</Link>
+      </Folder>
+      <Folder Include="migrations\" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <PackageReference Include="Aspire.StackExchange.Redis"/>
+        <PackageReference Include="Aspire.StackExchange.Redis.DistributedCaching"/>
+        <PackageReference Include="Microsoft.Extensions.Options"/>
+        <PackageReference Include="FluentValidation.AspNetCore"/>
+        <PackageReference Include="Hellang.Middleware.ProblemDetails"/>
+        <PackageReference Include="Newtonsoft.Json" />
+        <PackageReference Include="Swashbuckle.AspNetCore"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore"/>
+        <PackageReference Include="MediatR"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj"/>
+    </ItemGroup>
+    
+
+</Project>

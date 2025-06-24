@@ -1,0 +1,10 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Lint JS/TS projects
+cd src/spa && npm run lint
+
+# Lint .NET projects
+if command -v dotnet >/dev/null 2>&1; then
+  dotnet format --verify-no-changes
+fi

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Acheve.TestHost" />
+		<PackageReference Include="Shouldly" />
+		<PackageReference Include="OpenTelemetry.Exporter.Console"  />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="Respawn" />
+		<PackageReference Include="Testcontainers" />
+		<PackageReference Include="Testcontainers.PostgreSql" />
+		<PackageReference Include="Testcontainers.Redis" />
+		<PackageReference Include="Testcontainers.RabbitMQ" />
+		<PackageReference Include="xunit" />
+		<PackageReference Include="xunit.runner.visualstudio">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="coverlet.collector" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\local\DbSeeder\DbSeeder.csproj" />
+	  <ProjectReference Include="..\..\src\Api\Api.csproj" />
+	  <ProjectReference Include="..\..\src\Todos\Todos.csproj" />
+	</ItemGroup>
+
+</Project>
