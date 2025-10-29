@@ -1,0 +1,78 @@
+name: Documentation Preview
+
+on:
+  pull_request:
+    paths:
+      - 'src/**/*.cs'
+      - 'tools/generate-docs.sh'
+      - 'docs/events/**'
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Generate preview comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            let comment = '## 📚 Event Documentation Preview\n\n';
+            comment += 'This PR contains changes that may affect event documentation.\n\n';
+            
+            // Check if event documentation files exist
+            const docsPath = 'docs/events';
+            const files = ['README.md', 'asyncapi.yaml', 'integration-events.md', 'domain-events.md'];
+            
+            comment += '### Documentation Files\n\n';
+            files.forEach(file => {
+              const filePath = path.join(docsPath, file);
+              if (fs.existsSync(filePath)) {
+                comment += `- ✅ \`${file}\` - [View](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/${context.payload.pull_request.head.sha}/${docsPath}/${file})\n`;
+              } else {
+                comment += `- ❌ \`${file}\` - Missing\n`;
+              }
+            });
+            
+            comment += '\n### Quick Links\n\n';
+            comment += `- 📋 [AsyncAPI Spec](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/${context.payload.pull_request.head.sha}/docs/events/asyncapi.yaml)\n`;
+            comment += `- 🔄 [Integration Events](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/${context.payload.pull_request.head.sha}/docs/events/integration-events.md)\n`;
+            comment += `- ⚡ [Domain Events](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/${context.payload.pull_request.head.sha}/docs/events/domain-events.md)\n`;
+            comment += '\n---\n';
+            comment += '*Tip: You can visualize the AsyncAPI spec using [AsyncAPI Studio](https://studio.asyncapi.com/)*\n';
+            
+            // Post or update comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('Event Documentation Preview')
+            );
+            
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: comment
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: comment
+              });
+            }
