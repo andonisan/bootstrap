@@ -95,5 +95,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
+    <!-- Documentation Generator Tool -->
+    <PackageVersion Include="System.Reflection.MetadataLoadContext" Version="9.0.0" />
+    <PackageVersion Include="YamlDotNet" Version="16.2.1" />
+    <PackageVersion Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,50 @@
+asyncapi: 3.0.0
+info:
+  title: Bootstrap Integration Events API
+  version: 1.0.0
+  description: Auto-generated AsyncAPI specification for CAP integration events
+channels:
+  TodoCreatedEvent:
+    address: TodoCreatedEvent
+    messages:
+      TodoCreatedEvent:
+        payload:
+          type: object
+          properties:
+            TodoId:
+              type: string
+              format: uuid
+              description: The ID of the created Todo
+        description: |
+          Event published when a new Todo is created.
+          Consumed by: Notifications.TodoCreatedEventConsumer
+  TodoCompletedEvent:
+    address: TodoCompletedEvent
+    messages:
+      TodoCompletedEvent:
+        payload:
+          type: object
+          properties:
+            Id:
+              type: string
+              format: uuid
+              description: The ID of the completed Todo
+            Title:
+              type: string
+              description: The title of the completed Todo
+        description: |
+          Event published when a Todo is marked as completed.
+          Consumed by: Notifications.TodoCompletedEventConsumer
+operations:
+  receiveTodoCreatedEvent:
+    action: receive
+    channel:
+      $ref: '#/channels/TodoCreatedEvent'
+    messages:
+      - $ref: '#/channels/TodoCreatedEvent/messages/TodoCreatedEvent'
+  receiveTodoCompletedEvent:
+    action: receive
+    channel:
+      $ref: '#/channels/TodoCompletedEvent'
+    messages:
+      - $ref: '#/channels/TodoCompletedEvent/messages/TodoCompletedEvent'
