@@ -40,13 +40,18 @@ This directory contains tools for auto-generating documentation for integration 
 
 ### 3. `EventDocGenerator/`
 
-**Purpose**: .NET tool for scanning assemblies (advanced usage)
+**Purpose**: .NET tool for scanning assemblies programmatically
 
-**Status**: Work in progress - currently encounters assembly loading issues
+**Status**: Implemented but currently encounters assembly dependency resolution issues
 
-**Future Enhancement**: This tool could be enhanced to dynamically scan compiled assemblies to extract event information programmatically.
+**What it does**:
+- Uses System.Reflection to scan compiled assemblies
+- Extracts event metadata from types and attributes
+- Generates documentation based on discovered events
 
-**Current Approach**: The `generate-docs.sh` script uses static templates based on known events in the codebase.
+**Current Limitation**: The assembly loading approach requires all dependencies to be available at runtime, which can be complex. The current solution uses the simpler `generate-docs.sh` script with static templates.
+
+**Future Enhancement**: Could be enhanced with a proper AssemblyLoadContext to handle dependencies, or integrated with Roslyn for source code analysis instead of compiled assemblies.
 
 ## How It Works
 
@@ -126,7 +131,16 @@ When you add new events to the system:
 
 ### For Integration Events (CAP)
 
-1. Create a new event class in `src/Contracts/`:
+1. Create a new event contract (typically a simple record/class):
+```csharp
+public record MyNewIntegrationEvent
+{
+    public string Data { get; init; } = "";
+    public DateTime Timestamp { get; init; }
+}
+```
+
+Or if it's also used as a domain event:
 ```csharp
 public record MyNewEvent(string Data) : IDomainEvent;
 ```
