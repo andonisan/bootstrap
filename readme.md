@@ -46,3 +46,40 @@ We maintain Architecture Decision Records (ADRs) to document important architect
 
 ADRs capture the context and consequences of significant architectural decisions, making it easier for team members to understand why certain choices were made.
 
+## Event Documentation
+
+The project includes auto-generated documentation for integration events (CAP) and domain events (MediatR):
+
+- **Integration Events**: CAP event bus topics with publishers and consumers
+- **Domain Events**: MediatR events with their handlers and flow diagrams
+- **AsyncAPI Specification**: Standard API documentation for async messaging
+
+### Viewing Event Documentation
+
+Event documentation is available in the `docs/events/` directory:
+
+- [`docs/events/README.md`](docs/events/README.md) - Overview and architecture
+- [`docs/events/integration-events.md`](docs/events/integration-events.md) - CAP integration events
+- [`docs/events/domain-events.md`](docs/events/domain-events.md) - MediatR domain events
+- [`docs/events/asyncapi.yaml`](docs/events/asyncapi.yaml) - AsyncAPI 3.0 specification
+
+### Regenerating Documentation
+
+To regenerate the event documentation after making changes to events:
+
+```bash
+./tools/generate-docs.sh
+```
+
+This will scan the source code and update the documentation files automatically.
+
+### CI/CD Integration
+
+The documentation is automatically generated and updated on every push to the main branch through a GitHub Actions workflow. The workflow:
+
+1. Builds the project
+2. Generates event documentation
+3. Validates the AsyncAPI specification
+4. Commits updated documentation
+5. Deploys to GitHub Pages (if configured)
+
