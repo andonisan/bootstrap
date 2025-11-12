@@ -6,10 +6,6 @@ addons:
 
 <img src="./images/dotnet-intro.png"  />
 ---
-
-<img src="./images/dotnet-patros.png"  />
-
----
 layout: about-me
 
 helloMsg: Hola!
@@ -28,7 +24,7 @@ imageSrc: ./andoni.png
 <v-clicks>
 
 - Cada nuevo proyecto no empieza de cero (reutilizamos experiencia)
-- Los templates son útiles, pero insuficientes
+- Los templates de terceros son útiles, pero insuficientes
 - Necesitamos aprender de éxitos y fracasos previos
 - Las decisiones técnicas deben documentarse como consecuencia de experiencias anteriores
 - Un buen inicio ahorra meses de refactorización
@@ -48,6 +44,11 @@ imageSrc: ./andoni.png
 - Esto que vais a ver es un enfoque que hemos probado y funciona. (Opionated by experience, not dogma)
 - No es un enfoque rígido, sino una guía para empezar con buen pie
 -->
+---
+layout: center
+---
+
+## It depends...
 
 ---
 layout: center
@@ -57,9 +58,11 @@ layout: center
 
 ---
 
-### 🏢 ¿Qué tipo de empresa?
+
 
 <v-clicks>
+
+### 🏢 ¿Qué tipo de empresa?
 
 - **Madurez técnica**: Empresa con experiencia en desarrollo de software
 - **Cultura de calidad**: Tests y QA son parte del ADN organizacional
@@ -79,15 +82,17 @@ layout: center
 
 </v-clicks>
 
-<v-click>
 <br/>
+
+<v-clicks>
+
 
 ### 🚀 ¿Qué tipo de proyecto?
 - **Visión a largo plazo**: No es un MVP, se espera evolución y crecimiento
 - **Complejidad esperada**: Proyecto no trivial con requisitos cambiantes
 - **Soporte de infraestructura**: Equipo de DevOps disponible
 
-</v-click>
+</v-clicks>
 
 <!--
 
@@ -187,6 +192,21 @@ Siguiente slide para ver un ejemplo de ADR
 ```
 
 </v-click>
+
+---
+
+# Autoducumentación / automatización 
+
+<v-clicks>
+
+- OpenApi para documentar APIs automáticamente
+- AsyncAPI para documentar eventos y mensajería
+- Documentación generada automáticamente a partir del código
+- Mediante herramientas como DocFX, Docusaurus, etc.
+- Mediante IA <img src="./images/lol-goonies.gif"  />
+
+ 
+</v-clicks>
 
 ---
 layout: center
@@ -299,6 +319,12 @@ builder.Services.AddOpenTelemetry()
     .AddOpenTelemetryExporters(builder);
 
 ```
+---
+
+## Dashboard de grafana + otelcol
+https://github.com/grafana/docker-otel-lgtm
+
+![grafana.png](./images/grafana.png)
 
 ---
 
@@ -328,13 +354,17 @@ builder.Services.AddOpenTelemetry()
 
 # Directory.Build.props (raiz del proyecto)
 
-```xml{all|4|5|6}
+```xml{all|4|5|6|7-8|9-10}
 <Project>
   <PropertyGroup>
     <LangVersion>preview</LangVersion>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- SourceLink: permite depurar en código fuente original -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <!-- Code Analyzers: análisis estático en tiempo de compilación -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 </Project>
 ```
@@ -416,6 +446,32 @@ tab_width = 4
   <PackageReference Include="xunit" Condition="'$(IsTestProject)' == 'true'" />
 </ItemGroup>
 ```
+
+---
+
+# 🔧 dotnet tools
+
+<v-clicks>
+
+- Herramientas CLI instalables a nivel local o global
+- Se definen en `.config/dotnet-tools.json`
+- Compartidas con todo el equipo vía control de versiones
+- Instalación rápida con `dotnet tool restore`
+
+```bash
+# Inicializar manifest de herramientas
+dotnet new tool-manifest
+
+# Instalar herramientas útiles
+dotnet tool install husky
+dotnet tool install dotnet-format
+dotnet tool install dotnet-ef
+
+# Todo el equipo instala con un comando
+dotnet tool restore
+```
+
+</v-clicks>
 
 ---
 
@@ -561,8 +617,8 @@ public class TodoService(IEventPublisher publisher)
 ```csharp
 public class Todo : BaseEntity
 {   
-    public string Title { get; protected set; } = default!;
-    public bool Completed { get; protected set; }
+    public string Title { get; private set; } = default!;
+    public bool Completed { get; private set; }
     
     public Todo(string title)
     {
@@ -834,17 +890,17 @@ Así podemos tener un monolito modular que se puede escalar y evolucionar con el
 
 ¿Cuánta gente usa MediatR en la sala? 🙋‍♂️
 
-¿Cuántos conocéis eventing framework de .Net ~~9, 10~~, 11? 🙋‍♂️
+¿Cuántos conocéis eventing framework de .Net ~~9, 10~~, 11? 🙋‍♂️vaya bajón
 
-https://github.com/dotnet/aspnetcore/issues/53219
+https://github.com/dotnet/aspnetcore/issues/53219#issuecomment-3331354033
 Jimmy Bogard, Jeremy D. Miller, David Fowler, etc. 
 
 
 ### El problema real
 
-- **FluentValidation**: es comercial 💰
-- **MediatR**: va a ser comercial 💰
-- **MassTransit**: va a ser comercial 💰
+- **FluentAssertions**: es comercial 💰
+- **MediatR**: es comercial 💰
+- **MassTransit**: es comercial 💰
 - **Otras librerías populares** pueden seguir el mismo camino
 
 <br/>
@@ -893,6 +949,7 @@ Jimmy Bogard, Jeremy D. Miller, David Fowler, etc.
 - **Control total** sobre la funcionalidad
 - **Conocimiento** del equipo sobre el código
 - Mantenimiento **interno**
+- Fork de MediatR como base
 
 </v-click>
 
@@ -903,6 +960,7 @@ Jimmy Bogard, Jeremy D. Miller, David Fowler, etc.
 <v-clicks>
 
 - Everything as code
+- Automatize as much as possible
 - Modular Monolith + Aspire 
 - Infraestructura y documentación como código aumentan calidad
 - Modelo de dominio enriquecido (DDD) mejora mantenibilidad
@@ -933,4 +991,7 @@ X @AndoniSantamari
 
 
 
+---
+
+<img src="./images/dotnet-intro.png"  />
 ---

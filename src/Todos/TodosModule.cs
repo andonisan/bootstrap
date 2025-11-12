@@ -40,7 +40,7 @@ public static class TodosModule
             optionsBuilder.AddInterceptors(publishDomainEventsInterceptor);
         });
 
-        builder.EnrichNpgsqlDbContext<TodoDbContext>();
+       // builder.EnrichNpgsqlDbContext<TodoDbContext>();
 
         builder.Services.AddDbContext<ReadOnlyTodoDbContext>(options => options.UseNpgsql(connectionString));
 

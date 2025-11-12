@@ -28,10 +28,9 @@ var api = builder.AddProject<Projects.Api>(Api)
     .WaitFor(sql);
 
 builder.AddViteApp("front", "../spa")
-    .WithNpmPackageInstallation()
+    .WithNpm(install: true)
     .WithReference(api)
     .WithOtlpExporter()
-    .WithExternalHttpEndpoints()
     .PublishAsDockerFile();
 
 if (builder.ExecutionContext.IsRunMode)
