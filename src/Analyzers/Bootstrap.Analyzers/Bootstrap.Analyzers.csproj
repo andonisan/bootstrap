@@ -12,6 +12,9 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <DevelopmentDependency>true</DevelopmentDependency>
+    
+    <!-- Exclude from Aspire orchestration -->
+    <IsAspireProjectResource>false</IsAspireProjectResource>
   </PropertyGroup>
 
   <ItemGroup>
