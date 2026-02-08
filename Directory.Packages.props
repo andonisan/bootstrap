@@ -122,6 +122,11 @@
     <!-- ========================================= -->
     <!--<GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.11.0.117924" />-->
     <!-- ========================================= -->
+    <!-- ROSLYN ANALYZERS -->
+    <!-- ========================================= -->
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" />
+    <!-- ========================================= -->
     <!-- BUILD DEPENDENCIES (Security Fix) -->
     <!-- ========================================= -->
     <PackageVersion Include="Microsoft.Build.Tasks.Core" Version="17.14.9" />

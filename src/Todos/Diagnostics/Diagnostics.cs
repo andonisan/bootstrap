@@ -3,7 +3,7 @@ using Todos.Application.Features.Todo.Commands;
 
 namespace Todos.Diagnostics;
 
-public partial class Diagnostics
+internal partial class Diagnostics
 {
     private readonly ILogger _logger;
 

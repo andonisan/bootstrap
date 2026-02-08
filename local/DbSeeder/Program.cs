@@ -6,15 +6,22 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Todos.Infrastructure.Persistence;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace DbSeeder;
 
-var connectionString = builder.Configuration.GetConnectionString("TodoAppDb") ?? throw new ArgumentException("Connection string not found");
+internal class Program
+{
+    internal static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<DbMigrate>();
+        var connectionString = builder.Configuration.GetConnectionString("TodoAppDb") ?? throw new ArgumentException("Connection string not found");
 
-var app = builder.Build();
+        builder.Services.AddSingleton<DbMigrate>();
 
-var migrator = app.Services.GetRequiredService<DbMigrate>();
+        var app = builder.Build();
 
-migrator.Migrate(connectionString);
+        var migrator = app.Services.GetRequiredService<DbMigrate>();
 
+        migrator.Migrate(connectionString);
+    }
+}

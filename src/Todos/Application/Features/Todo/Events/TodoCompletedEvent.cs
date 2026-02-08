@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Todos.Application.Features.Todo.Events;
 
-public class TodoCompletedEventHandler(ICapPublisher publishEndpoint, ILogger<TodoCompletedEventHandler> logger)
+internal class TodoCompletedEventHandler(ICapPublisher publishEndpoint, ILogger<TodoCompletedEventHandler> logger)
     : INotificationHandler<TodoCompletedEvent>
 {
     public async Task Handle(TodoCompletedEvent notification, CancellationToken cancellationToken)

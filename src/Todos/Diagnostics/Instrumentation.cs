@@ -3,7 +3,7 @@ using System.Diagnostics.Metrics;
 
 namespace Todos.Diagnostics;
 
-public static class Instrumentation
+internal static class Instrumentation
 {
     public const string ServiceName = "todos";
 

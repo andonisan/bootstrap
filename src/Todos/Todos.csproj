@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="TodoUnitTests" />
+    <InternalsVisibleTo Include="FunctionalTests" />
+    <InternalsVisibleTo Include="DbService" />
+    <InternalsVisibleTo Include="DbSeeder" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Aspire.Npgsql" />
 
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" />
