@@ -5,7 +5,7 @@ namespace Todos.Infrastructure.Persistence;
 
 public class TodoDbContext(DbContextOptions<TodoDbContext> options) : DbContext(options)
 {
-    public DbSet<Todo> Todos => Set<Todo>();
+    internal DbSet<Todo> Todos => Set<Todo>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -2,7 +2,7 @@
 
 namespace Todos.Domain;
 
-public class Todo : BaseEntity
+internal class Todo : BaseEntity
 {
     // This protected constructor is required for EF Core
     protected Todo()

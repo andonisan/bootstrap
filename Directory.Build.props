@@ -17,4 +17,11 @@
     
     -->
   </PropertyGroup>
+
+  <!-- Analyzers globales -->
+  <ItemGroup Condition="!$(MSBuildProjectName.Contains('.Analyzers'))">
+    <ProjectReference Include="$(MSBuildThisFileDirectory)src\Analyzers\Bootstrap.Analyzers\Bootstrap.Analyzers.csproj"
+                      OutputItemType="Analyzer"
+                      ReferenceOutputAssembly="false" />
+  </ItemGroup>
 </Project>

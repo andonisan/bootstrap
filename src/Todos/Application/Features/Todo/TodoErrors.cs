@@ -1,6 +1,6 @@
 namespace Todos.Application.Features.Todo;
 
-public static class TodoErrors
+internal static class TodoErrors
 {
     public static Error NotFound(Guid todoId) =>
         Error.NotFound(
